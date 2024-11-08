@@ -87,7 +87,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       userType: "Individual"
     });
 
-    const otp = (newUser.otp = otpGenerator.generate(4, {
+    const otp = (newUser.otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       specialChars: false,
       lowerCaseAlphabets: false,
