@@ -29,7 +29,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["Individual", "Sponsor", "Admin"]
     },
+    businessType: {
+      type: String,
+      enum: ["Producer", "Wholesaler", "Retailer"]
+    },
+
     password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+    businessName: {
+      type: String,
+      required: true,
+      select: false,
+    },
+    businessAddress: {
       type: String,
       required: true,
       select: false,

@@ -55,7 +55,7 @@ exports.ping = catchAsync(async (req, res, next) => {
  * @type POST
  */
 exports.signup = catchAsync(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, businessName, businessType, businessAddress } = req.body;
 
   // Check for required fields
   switch (true) {
@@ -84,7 +84,10 @@ exports.signup = catchAsync(async (req, res, next) => {
       name: name,
       email: email,
       password: password,
-      userType: "Individual"
+      userType: "Individual",
+      businessName:businessName,
+      businessType: businessType,
+      businessAddress:businessAddress
     });
 
     const otp = (newUser.otp = otpGenerator.generate(6, {
@@ -96,7 +99,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
     const message = `
         Hi ${req.body.name}, Welcome to 'Buga' 🚀
-        Before doing anything, we recommend verifying your account to use most of the features available,
         here is your otp verification code ${otp}`;
 
     await sendEmail({
@@ -156,7 +158,7 @@ exports.ngoSignup = catchAsync(async (req, res, next) => {
       profileSet: false,
     });
 
-    const otp = (newUser.otp = otpGenerator.generate(4, {
+    const otp = (newUser.otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       specialChars: false,
       lowerCaseAlphabets: false,
@@ -380,7 +382,7 @@ exports.resendVerification = catchAsync(async(req, res, next)=>{
   }
 
  
-  const otp = user.otp = otpGenerator.generate(4, {upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false})
+  const otp = user.otp = otpGenerator.generate(6, {upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false})
   await user.save({ validateBeforeSave: false})
 
   const message = `
@@ -434,7 +436,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     );
   }
 
-  const otp = (user.otp = otpGenerator.generate(4, {
+  const otp = (user.otp = otpGenerator.generate(6, {
     upperCaseAlphabets: false,
     specialChars: false,
     lowerCaseAlphabets: false,
